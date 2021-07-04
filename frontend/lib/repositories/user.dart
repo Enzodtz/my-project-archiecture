@@ -34,6 +34,23 @@ class UserRepository {
     }
   }
 
+  static Future<User> read() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = await prefs.getString('accessToken');
+    String? refreshToken = await prefs.getString('refreshToken');
+
+    if (accessToken != null && refreshToken != null) {
+      User user = User.fromJwt({
+        'access': accessToken,
+        'refreshToken': refreshToken,
+      });
+
+      return user;
+    } else {
+      throw Exception('No previous user.');
+    }
+  }
+
   static void refreshTokenIfNeeded(User? user) async {
     if (user != null) {
       if (JwtDecoder.isExpired(user.accessToken)) {

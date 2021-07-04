@@ -8,3 +8,5 @@ class UserLogin extends UserEvent {
 
   UserLogin(this.form);
 }
+
+class UserRead extends UserEvent {}
