@@ -1,3 +1,4 @@
+import 'package:frontend/constants/shared_preferences.dart';
 import 'package:frontend/models/user.dart';
 import 'package:frontend/repositories/api_helper.dart';
 import 'dart:async';
@@ -23,8 +24,10 @@ class UserRepository {
         User user = User.fromJwt(jwt);
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('accessToken', user.accessToken);
-        await prefs.setString('refreshToken', user.refreshToken);
+        await prefs.setString(
+            SharedPreferencesConstants.ACCESS_TOKEN, user.accessToken);
+        await prefs.setString(
+            SharedPreferencesConstants.REFRESH_TOKEN, user.refreshToken);
 
         return user;
       case 401:
